@@ -1,0 +1,28 @@
+{
+    "sources": {
+        "d:/code/web3WorkSpace/web3Homework/L0/02SolidityDemo/contracts/a.sol": {
+            "ast": {
+                "absolutePath": "d:/code/web3WorkSpace/web3Homework/L0/02SolidityDemo/contracts/a.sol",
+                "exportedSymbols": {},
+                "id": 2,
+                "license": "UNLICENSED",
+                "nodeType": "SourceUnit",
+                "nodes": [
+                    {
+                        "id": 1,
+                        "literals": [
+                            "solidity",
+                            "^",
+                            "0.8",
+                            ".28"
+                        ],
+                        "nodeType": "PragmaDirective",
+                        "src": "40:24:0"
+                    }
+                ],
+                "src": "40:28:0"
+            },
+            "id": 0
+        }
+    }
+}
