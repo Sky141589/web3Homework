@@ -209,26 +209,24 @@ contract DataLocations {
 }
 //函数
 contract Function {
-    // Functions can return multiple values.
+
     function returnMany() public pure returns (uint256, bool, uint256) {
         return (1, true, 2);
     }
 
-    // Return values can be named.
+
     function named() public pure returns (uint256 x, bool b, uint256 y) {
         return (1, true, 2);
     }
 
-    // Return values can be assigned to their name.
-    // In this case the return statement can be omitted.
+
     function assigned() public pure returns (uint256 x, bool b, uint256 y) {
         x = 1;
         b = true;
         y = 2;
     }
 
-    // Use destructuring assignment when calling another
-    // function that returns multiple values.
+  
     function destructuringAssignments()
         public
         pure
@@ -236,18 +234,16 @@ contract Function {
     {
         (uint256 i, bool b, uint256 j) = returnMany();
 
-        // Values can be left out.
+    
         (uint256 x,, uint256 y) = (4, 5, 6);
 
         return (i, b, j, x, y);
     }
 
-    // Cannot use map for either input or output
 
-    // Can use array for input
     function arrayInput(uint256[] memory _arr) public {}
 
-    // Can use array for output
+
     uint256[] public arr;
 
     function arrayOutput() public view returns (uint256[] memory) {
@@ -257,16 +253,12 @@ contract Function {
 //错误
 contract Error {
     function testRequire(uint256 _i) public pure {
-        // Require should be used to validate conditions such as:
-        // - inputs
-        // - conditions before execution
-        // - return values from calls to other functions
+
         require(_i > 10, "Input must be greater than 10");
     }
 
     function testRevert(uint256 _i) public pure {
-        // Revert is useful when the condition to check is complex.
-        // This code does the exact same thing as the example above
+ 
         if (_i <= 10) {
             revert("Input must be greater than 10");
         }
@@ -275,11 +267,7 @@ contract Error {
     uint256 public num;
 
     function testAssert() public view {
-        // Assert should only be used to test for internal errors,
-        // and to check invariants.
-
-        // Here we assert that num is always equal to 0
-        // since it is impossible to update the value of num
+    
         assert(num == 0);
     }
 
@@ -298,29 +286,20 @@ contract Error {
 }
 //函数修饰符
 contract FunctionModifier {
-    // We will use these variables to demonstrate how to use
-    // modifiers.
+
     address public owner;
     uint256 public x = 10;
     bool public locked;
 
     constructor() {
-        // Set the transaction sender as the owner of the contract.
         owner = msg.sender;
     }
 
-    // Modifier to check that the caller is the owner of
-    // the contract.
     modifier onlyOwner() {
         require(msg.sender == owner, "Not owner");
-        // Underscore is a special character only used inside
-        // a function modifier and it tells Solidity to
-        // execute the rest of the code.
         _;
     }
 
-    // Modifiers can take inputs. This modifier checks that the
-    // address passed in is not the zero address.
     modifier validAddress(address _addr) {
         require(_addr != address(0), "Not valid address");
         _;
@@ -334,9 +313,6 @@ contract FunctionModifier {
         owner = _newOwner;
     }
 
-    // Modifiers can be called before and / or after a function.
-    // This modifier prevents a function from being called while
-    // it is still executing.
     modifier noReentrancy() {
         require(!locked, "No reentrancy");
 
@@ -355,9 +331,6 @@ contract FunctionModifier {
 }
 //事件
 contract Event {
-    // Event declaration
-    // Up to 3 parameters can be indexed.
-    // Indexed parameters helps you filter the logs by the indexed parameter
     event Log(address indexed sender, string message);
     event AnotherLog();
 
@@ -367,7 +340,7 @@ contract Event {
         emit AnotherLog();
     }
 }
-//构造函数
+
 contract X {
     string public name;
 
@@ -376,7 +349,7 @@ contract X {
     }
 }
 
-// Base contract Y
+
 contract Y {
     string public text;
 
@@ -385,33 +358,18 @@ contract Y {
     }
 }
 
-// There are 2 ways to initialize parent contract with parameters.
-
-// Pass the parameters here in the inheritance list.
 contract B is X("Input to X"), Y("Input to Y") {}
 
 contract C is X, Y {
-    // Pass the parameters here in the constructor,
-    // similar to function modifiers.
+
     constructor(string memory _name, string memory _text) X(_name) Y(_text) {}
 }
 
-// Parent constructors are always called in the order of inheritance
-// regardless of the order of parent contracts listed in the
-// constructor of the child contract.
 
-// Order of constructors called:
-// 1. X
-// 2. Y
-// 3. D
 contract D is X, Y {
     constructor() X("X was called") Y("Y was called") {}
 }
 
-// Order of constructors called:
-// 1. X
-// 2. Y
-// 3. E
 contract E is X, Y {
     constructor() Y("Y was called") X("X was called") {}
 }
